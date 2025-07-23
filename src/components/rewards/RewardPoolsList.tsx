@@ -164,17 +164,18 @@ export const RewardPoolsList: React.FC = () => {
       }
 
       // TODO: Parse transaction results to get actual withdrawal amounts
-      const withdrawResults: WithdrawResult[] = poolsToWithdraw.map(({ pool, balance }) => ({
-        pool_address: pool!.pool_address,
-        symbol: balance!.symbol,
-        amount: balance!.balance,
-        success: true
-      }));
+      // const withdrawResults: WithdrawResult[] = poolsToWithdraw.map(({ pool, balance }) => ({
+      //   pool_address: pool!.pool_address,
+      //   symbol: balance!.symbol,
+      //   amount: balance!.balance,
+      //   success: true
+      // }));
 
       // Show success modal with results
       dispatch({ 
         type: 'SHOW_MODAL', 
-        payload: <WithdrawSummary results={withdrawResults} />
+        // payload: <WithdrawSummary results={withdrawResults} />
+        payload: <div style={{padding: '32px', textAlign: 'center'}}>Withdraw Successful!</div>
       });
 
       // Clear selections and refresh balances
@@ -232,7 +233,7 @@ export const RewardPoolsList: React.FC = () => {
   const poolsWithValidKeys = getSelectedPoolsWithValidKeys();
   const disabledPools = getSelectedDisabledPools();
   const canSetKeys = poolsNeedingKeys.length > 0 && state.permitSignature;
-  const canWithdraw = poolsWithValidKeys.length > 0 && poolsNeedingKeys.length === 0;
+  const canWithdraw = poolsNeedingKeys.length === 0 && (poolsWithValidKeys.length > 0 || disabledPools.length > 0);
 
   // Show loading state while viewing keys are loading
   if (!state.viewingKeysLoaded) {
@@ -333,6 +334,7 @@ export const RewardPoolsList: React.FC = () => {
 };
 
 // TODO: Move to separate component file
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const WithdrawSummary: React.FC<{ results: WithdrawResult[] }> = ({ results }) => {
   const { dispatch } = useAppContext();
 

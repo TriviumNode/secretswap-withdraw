@@ -33,6 +33,7 @@ export const useKeplr = () => {
         url: 'https://secret.api.trivium.network:1317',
         wallet: offlineSigner,
         walletAddress,
+        encryptionUtils: window.keplr.getEnigmaUtils('secret-4'),
       });
 
       const balanceResponse = await client.query.bank.balance({
@@ -42,11 +43,6 @@ export const useKeplr = () => {
 
       const scrtBalance = balanceResponse.balance?.amount || '0';
       const scrtInWallet = parseInt(scrtBalance) / 1_000_000;
-
-      // Check minimum balance requirement
-      if (scrtInWallet < 1) {
-        throw new Error(`Insufficient SCRT balance. You need at least 1 SCRT for transaction fees. Current balance: ${scrtInWallet.toFixed(6)} SCRT`);
-      }
 
       return {
         client,
