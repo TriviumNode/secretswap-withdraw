@@ -23,7 +23,13 @@ export const setViewingKeys = async (client: SecretNetworkClient, wallet_address
             }
         });
     });
-    return await client.tx.broadcast(messages, {
+    const result = await client.tx.broadcast(messages, {
         gasLimit: messages.length * 40_000 + 50_000,
     });
+    
+    if (result.code !== 0) {
+        throw new Error(`Transaction failed: ${result.rawLog}`);
+    }
+
+    return result;
 }

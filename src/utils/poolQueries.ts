@@ -1,7 +1,7 @@
 import { batchQuery } from '@shadeprotocol/shadejs';
 import type { RewardPool, PoolBalance, ViewingKeyStatus } from '../types';
 import { getViewingKeyFromWallet } from './viewingKeys';
-import { RewardsPoolBalanceQuery } from './rewardQueries';
+import { BridgeRewardsPoolBalanceQuery, SecretSwapRewardsPoolBalanceQuery } from './rewardQueries';
 import { QueryRouterAddress, QueryRouterCodeHash } from '../constants';
 import { queryContract } from './queryWrapper';
 
@@ -22,7 +22,7 @@ export const detectViewingKeyStatuses = async (
 
     // Try to get viewing key from Keplr wallet first
     try {
-      const keplrKey = await getViewingKeyFromWallet(pool.deposit_token.address);
+      const keplrKey = await getViewingKeyFromWallet(pool.pool_address);
       if (keplrKey) {
         // TODO: Test the key by querying balance
         status.hasValidKey = true;
@@ -70,10 +70,10 @@ export const batchQueryPoolBalances = async (
       let viewingKey: string;
       
       if (status.keySource === 'signature' && permitSignature) {
-        // TODO this is wrong, but I don't think any of the pools support permits anyway 🤷‍♂️
         viewingKey = permitSignature;
       } else if (status.keySource === 'keplr') {
-        const keplrKey = await getViewingKeyFromWallet(pool.deposit_token.address);
+        const keplrKey = await getViewingKeyFromWallet(pool.pool_address);
+        console.log(pool.pool_address, keplrKey)
         if (!keplrKey) continue;
         viewingKey = keplrKey;
       } else {
@@ -93,7 +93,11 @@ export const batchQueryPoolBalances = async (
 
   // Prepare batch queries
   const queries = poolsWithKeys.map((poolData) => {
-    const query = new RewardsPoolBalanceQuery(walletAddress, poolData.viewingKey);
+    const query = poolData.pool.reward_token.address === 'secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek' ?
+      new BridgeRewardsPoolBalanceQuery(walletAddress, poolData.viewingKey)
+      : new SecretSwapRewardsPoolBalanceQuery(walletAddress, poolData.viewingKey);
+
+    console.log(query)
     
     return {
       id: poolData.pool.pool_address, // Use pool address as ID for easy mapping
@@ -134,12 +138,19 @@ export const batchQueryPoolBalances = async (
           continue;
         }
 
+        if (result.response.query_error) {
+          console.error(`Query failed for pool ${poolAddress}:`, result.response.query_error.msg);
+          continue;
+        }
+
         // Parse the balance from the response
         let balance = '0';
         if (result.response && typeof result.response === 'object') {
           // Handle different possible response formats
           if (result.response.balance) {
-            balance = result.response.balance;
+            balance = result.response.balance.amount;
+          } else if (result.response.deposit) {
+            balance = result.response.deposit.deposit;
           } else if (result.response.viewing_key_error) {
             console.warn(`Viewing key error for pool ${poolAddress}:`, result.response.viewing_key_error);
             continue;
@@ -171,7 +182,7 @@ export const batchQueryPoolBalances = async (
       try {
         const response = await queryContract(
           poolData.pool.pool_address,
-          new RewardsPoolBalanceQuery(walletAddress, poolData.viewingKey)
+          new SecretSwapRewardsPoolBalanceQuery(walletAddress, poolData.viewingKey)
         )
 
         balances[poolData.pool.pool_address] = {

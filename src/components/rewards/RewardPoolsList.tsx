@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../../contexts/AppContext';
 import { useKeplr } from '../../hooks/useKeplr';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Card, CardHeader, CardBody, CardFooter } from '../common/Card';
 import { Button } from '../common/Button';
 import { PoolRow } from './PoolRow';
@@ -11,17 +10,16 @@ import { getRewardRedeemMessage, getRewardEmergencyRedeemMessage } from '../../u
 import type { WithdrawResult } from '../../types';
 
 export const RewardPoolsList: React.FC = () => {
-  const { state, dispatch } = useAppContext();
+  const { state, dispatch, getViewingKeys } = useAppContext();
   const { connectWallet } = useKeplr();
-  const { getViewingKeys, saveViewingKeys } = useLocalStorage();
   const [isSettingKeys, setIsSettingKeys] = useState(false);
   const [isWithdrawing, setIsWithdrawing] = useState(false);
 
-  // Load viewing key statuses on mount
+  // Load viewing key statuses on mount after viewing keys are loaded
   useEffect(() => {
-    if (!state.walletAddress) return;
+    if (!state.walletAddress || !state.viewingKeysLoaded) return;
     loadViewingKeyStatuses();
-  }, [state.walletAddress, state.permitSignature]);
+  }, [state.walletAddress, state.permitSignature, state.viewingKeysLoaded]);
 
   useEffect(()=>{
     queryPoolBalances()
@@ -52,7 +50,6 @@ export const RewardPoolsList: React.FC = () => {
 
   const queryPoolBalances = async () => {
     if (!state.walletAddress) return;
-    console.log('queryPoolBalances')
 
     try {
       const balances = await batchQueryPoolBalances(
@@ -63,7 +60,6 @@ export const RewardPoolsList: React.FC = () => {
       );
       
       dispatch({ type: 'SET_POOL_BALANCES', payload: balances });
-      console.log('queryPoolBalances Dispatched:', balances)
     } catch (error) {
       console.error('Failed to query pool balances:', error);
     }
@@ -82,7 +78,7 @@ export const RewardPoolsList: React.FC = () => {
       const poolsToSet = Array.from(state.selectedPoolAddresses).filter(poolAddress => {
         const pool = state.rewardPools.find(p => p.pool_address === poolAddress);
         const status = state.viewingKeyStatuses[poolAddress];
-        return pool && !status?.hasValidKey;
+        return pool && !pool.disabled && !status?.hasValidKey;
       });
 
       if (poolsToSet.length === 0) {
@@ -96,7 +92,10 @@ export const RewardPoolsList: React.FC = () => {
       // Save to localStorage
       const savedKeys = getViewingKeys(state.walletAddress);
       const newSavedKeys = [...new Set([...savedKeys, ...poolsToSet])];
-      saveViewingKeys(state.walletAddress, newSavedKeys);
+      dispatch({ 
+        type: 'SAVE_VIEWING_KEYS', 
+        payload: { walletAddress: state.walletAddress, poolAddresses: newSavedKeys }
+      });
 
       // Update viewing key statuses
       const updatedStatuses = { ...state.viewingKeyStatuses };
@@ -226,6 +225,30 @@ export const RewardPoolsList: React.FC = () => {
   const poolsWithValidKeys = getSelectedPoolsWithValidKeys();
   const canSetKeys = poolsNeedingKeys.length > 0 && state.permitSignature;
   const canWithdraw = poolsWithValidKeys.length > 0 && poolsNeedingKeys.length === 0;
+
+  // Show loading state while viewing keys are loading
+  if (!state.viewingKeysLoaded) {
+    return (
+      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '2rem' }}>
+        <Card>
+          <CardBody>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              gap: '1rem',
+              padding: '3rem 1rem'
+            }}>
+              <div className="loading-spinner-large" />
+              <p style={{ color: 'var(--color-text-secondary)' }}>
+                Loading viewing keys for your wallet...
+              </p>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '2rem' }}>

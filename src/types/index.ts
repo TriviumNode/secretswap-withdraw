@@ -68,6 +68,7 @@ export interface AppState {
   selectedPoolAddresses: Set<string>;
   poolBalances: Record<string, PoolBalance>;
   viewingKeyStatuses: Record<string, ViewingKeyStatus>;
+  viewingKeysLoaded: boolean;
   
   // UI state
   isLoading: boolean;
@@ -84,12 +85,15 @@ export type AppAction =
   | { type: 'SET_PERMIT_SIGNATURE'; payload: string }
   | { type: 'SET_POOL_BALANCES'; payload: Record<string, PoolBalance> }
   | { type: 'SET_VIEWING_KEY_STATUSES'; payload: Record<string, ViewingKeyStatus> }
+  | { type: 'SET_VIEWING_KEYS_LOADED'; payload: boolean }
+  | { type: 'SAVE_VIEWING_KEYS'; payload: { walletAddress: string; poolAddresses: string[] } }
   | { type: 'TOGGLE_POOL_SELECTION'; payload: string }
   | { type: 'SELECT_ALL_POOLS'; payload: string[] }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
   | { type: 'SHOW_MODAL'; payload: React.ReactNode }
-  | { type: 'HIDE_MODAL' };
+  | { type: 'HIDE_MODAL' }
+  | { type: 'CLEAR_STORAGE_DATA' };
 
 export interface WithdrawResult {
   pool_address: string;

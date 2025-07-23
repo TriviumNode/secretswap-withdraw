@@ -1,8 +1,11 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { AppState, AppAction, RewardPool } from '../types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 import rewardPoolsData from '../data/reward_pools.json';
+
+// Storage keys
+const THEME_STORAGE_KEY = 'secretswap-migration-theme';
+const VIEWING_KEYS_STORAGE_KEY = 'secretswap-migration-viewing-keys';
 
 // Initial state
 const initialState: AppState = {
@@ -23,6 +26,7 @@ const initialState: AppState = {
   selectedPoolAddresses: new Set(),
   poolBalances: {},
   viewingKeyStatuses: {},
+  viewingKeysLoaded: false,
   
   // UI state
   isLoading: false,
@@ -53,6 +57,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         selectedPoolAddresses: new Set(),
         poolBalances: {},
         viewingKeyStatuses: {},
+        viewingKeysLoaded: false,
         currentStep: 'info',
       };
       
@@ -84,6 +89,38 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return {
         ...state,
         viewingKeyStatuses: action.payload,
+      };
+      
+    case 'SET_VIEWING_KEYS_LOADED':
+      return {
+        ...state,
+        viewingKeysLoaded: action.payload,
+      };
+      
+    case 'SAVE_VIEWING_KEYS': {
+      // Save to localStorage
+      try {
+        const stored = localStorage.getItem(VIEWING_KEYS_STORAGE_KEY);
+        const viewingKeysData = stored ? JSON.parse(stored) : {};
+        viewingKeysData[action.payload.walletAddress] = action.payload.poolAddresses;
+        localStorage.setItem(VIEWING_KEYS_STORAGE_KEY, JSON.stringify(viewingKeysData));
+      } catch (error) {
+        console.error('Failed to save viewing keys to localStorage:', error);
+      }
+      return state;
+    }
+      
+    case 'CLEAR_STORAGE_DATA':
+      try {
+        localStorage.removeItem(THEME_STORAGE_KEY);
+        localStorage.removeItem(VIEWING_KEYS_STORAGE_KEY);
+      } catch (error) {
+        console.error('Failed to clear localStorage:', error);
+      }
+      return {
+        ...initialState,
+        theme: 'light',
+        rewardPools: state.rewardPools, // Keep pools data
       };
       
     case 'TOGGLE_POOL_SELECTION': {
@@ -137,10 +174,42 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
   }
 };
 
+// localStorage functions
+const loadTheme = (): 'light' | 'dark' => {
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    return stored === 'dark' ? 'dark' : 'light';
+  } catch (error) {
+    console.error('Failed to load theme from localStorage:', error);
+    return 'light';
+  }
+};
+
+const saveTheme = (theme: 'light' | 'dark') => {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {
+    console.error('Failed to save theme to localStorage:', error);
+  }
+};
+
+const getViewingKeys = (walletAddress: string): string[] => {
+  try {
+    const stored = localStorage.getItem(VIEWING_KEYS_STORAGE_KEY);
+    if (!stored) return [];
+    const viewingKeysData = JSON.parse(stored);
+    return viewingKeysData[walletAddress] || [];
+  } catch (error) {
+    console.error('Failed to load viewing keys from localStorage:', error);
+    return [];
+  }
+};
+
 // Context creation
 interface AppContextType {
   state: AppState;
   dispatch: React.Dispatch<AppAction>;
+  getViewingKeys: (walletAddress: string) => string[];
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -152,30 +221,45 @@ interface AppProviderProps {
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-  const { theme, updateTheme } = useLocalStorage();
 
-  // Initialize theme from localStorage
+  // Load theme immediately on app init
   useEffect(() => {
-    dispatch({ type: 'SET_THEME', payload: theme });
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    const savedTheme = loadTheme();
+    dispatch({ type: 'SET_THEME', payload: savedTheme });
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
 
   // Update document theme when state changes
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', state.theme);
   }, [state.theme]);
 
+  // Load viewing keys after wallet connection
+  useEffect(() => {
+    if (state.walletAddress && !state.viewingKeysLoaded) {
+      // Set loading state
+      dispatch({ type: 'SET_VIEWING_KEYS_LOADED', payload: false });
+      
+      // Load viewing keys for this wallet
+      setTimeout(() => {
+        // Small delay to show loading state
+        dispatch({ type: 'SET_VIEWING_KEYS_LOADED', payload: true });
+      }, 100);
+    }
+  }, [state.walletAddress, state.viewingKeysLoaded]);
+
   // Enhanced dispatch that handles theme updates
   const enhancedDispatch = useCallback((action: AppAction) => {
     if (action.type === 'SET_THEME') {
-      updateTheme(action.payload);
+      saveTheme(action.payload);
     }
     dispatch(action);
-  }, [updateTheme]);
+  }, []);
 
   const contextValue: AppContextType = {
     state,
     dispatch: enhancedDispatch,
+    getViewingKeys,
   };
 
   return (

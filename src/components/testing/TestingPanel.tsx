@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../contexts/AppContext';
 import { useKeplr } from '../../hooks/useKeplr';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Card, CardHeader, CardBody } from '../common/Card';
 import { Button } from '../common/Button';
 
+// Utility function for getting permit (keeping existing localStorage logic)
+const getPermit = (walletAddress: string): string | null => {
+  const cacheKey = `SecretSwap-Migration-Permit-${walletAddress}`;
+  try {
+    return localStorage.getItem(cacheKey);
+  } catch (error) {
+    console.error('Failed to get permit from localStorage:', error);
+    return null;
+  }
+};
+
 export const TestingPanel: React.FC = () => {
-  const { state, dispatch } = useAppContext();
+  const { state, dispatch, getViewingKeys } = useAppContext();
   const { connectWallet, signPermitMessage } = useKeplr();
-  const { getViewingKeys, clearData } = useLocalStorage();
-  const { getPermit } = useLocalStorage();
   const [testResults, setTestResults] = useState<string[]>([]);
 
   const addTestResult = (message: string) => {
@@ -83,8 +91,9 @@ export const TestingPanel: React.FC = () => {
   };
 
   const clearAllData = () => {
-    clearData();
-    addTestResult('🗑️ All stored data cleared');
+    addTestResult('Clearing all stored data...');
+    dispatch({ type: 'CLEAR_STORAGE_DATA' });
+    addTestResult('✅ All data cleared');
     dispatch({ type: 'DISCONNECT_WALLET' });
   };
 

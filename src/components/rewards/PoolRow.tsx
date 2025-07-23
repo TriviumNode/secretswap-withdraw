@@ -33,6 +33,10 @@ export const PoolRow: React.FC<PoolRowProps> = ({
       return { text: sourceText, className: 'status-valid' };
     }
 
+    if (pool.disabled) {
+      return { text: 'Key Not Required', className: 'status-valid' };
+    }
+
     return { text: 'No Key', className: 'status-invalid' };
   };
 
@@ -56,7 +60,7 @@ export const PoolRow: React.FC<PoolRowProps> = ({
       {/* Pool Info */}
       <div className="pool-info">
         <div className="pool-symbol">
-          {poolType}: {pool.deposit_token.symbol}
+          {poolType}: {pool.deposit_token.symbol} {pool.disabled && '(OLD)'}
         </div>
         <div className="pool-balance">
           {balance ? (
@@ -65,13 +69,15 @@ export const PoolRow: React.FC<PoolRowProps> = ({
             ) : (
               'No balance'
             )
-          ) : viewingKeyStatus?.hasValidKey ? (
+          ) : pool.disabled ?
+            ''
+          : viewingKeyStatus?.hasValidKey ?
             'Loading balance...'
-          ) : (
+          :
             'Select this pool to create a viewing key.'
-          )}
+          }
         </div>
-        {/* {pool.disabled && (
+        {pool.disabled && (
           <div style={{ 
             fontSize: '0.75rem', 
             color: 'var(--color-warning)',
@@ -79,13 +85,13 @@ export const PoolRow: React.FC<PoolRowProps> = ({
           }}>
             Emergency withdrawal required
           </div>
-        )} */}
+        )}
       </div>
 
       {/* Status */}
       <div className="pool-status">
-        <div className={`status-dot ${statusInfo.className}`} />
         <span>{statusInfo.text}</span>
+        <div className={`status-dot ${statusInfo.className}`} />
       </div>
     </div>
   );

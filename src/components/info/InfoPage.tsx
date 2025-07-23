@@ -32,7 +32,7 @@ export const InfoPage: React.FC = () => {
         console.warn('Failed to sign permit, will set viewing keys manually:', permitError);
       }
 
-      // Move to reward pools step
+      // Move to reward pools step - viewing keys will load automatically
       dispatch({ type: 'SET_STEP', payload: 'reward-pools' });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to start migration';

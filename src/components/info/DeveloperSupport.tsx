@@ -5,26 +5,28 @@ import { Button } from '../common/Button';
 export const DeveloperSupport: React.FC = () => {
   const explorers = [
     {
-      name: 'Secret Nodes',
-      url: 'https://secretnodes.com/validator/secretvaloper1a73czfcgtzx6y2xn6l7yj9wplrmhqp7fezv7f8',
-      description: 'Primary Secret Network explorer'
-    },
-    {
-      name: 'BigDipper',
-      url: 'https://bigdipper.live/secret/validators/secretvaloper1a73czfcgtzx6y2xn6l7yj9wplrmhqp7fezv7f8',
-      description: 'Detailed validator information'
-    },
-    {
       name: 'Mintscan',
-      url: 'https://www.mintscan.io/secret/validators/secretvaloper1a73czfcgtzx6y2xn6l7yj9wplrmhqp7fezv7f8',
-      description: 'Popular Cosmos ecosystem explorer'
-    }
+      url: 'https://www.mintscan.io/secret/validators/secretvaloper1ahawe276d250zpxt0xgpfg63ymmu63a0svuvgw',
+      description: 'Primary Cosmos ecosystem explorer'
+    },
+    {
+      name: 'Ping.pub',
+      url: 'https://ping.pub/secret/staking/secretvaloper1ahawe276d250zpxt0xgpfg63ymmu63a0svuvgw',
+      description: 'Lightweight explorer for Cosmos-based blockchains'
+    },
   ];
 
   return (
     <Card style={{ marginTop: '3rem' }}>
       <CardHeader>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>
+            Support the Developers
+          </h2>
+        </div>
+      </CardHeader>
+      <CardBody>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <img 
             src="/trivium_logo_black.svg" 
             alt="Trivium" 
@@ -35,23 +37,16 @@ export const DeveloperSupport: React.FC = () => {
               target.style.display = 'none';
             }}
           />
-          <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>
-            Support the Developers
-          </h2>
-        </div>
-      </CardHeader>
-      <CardBody>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <p style={{ 
             margin: 0, 
             color: 'var(--color-text-secondary)',
             lineHeight: '1.6'
           }}>
-            This migration tool was built by the Trivium team. If you found it helpful, 
-            consider supporting our work by delegating your SCRT to our validator.
+            This migration tool was built by Trivium. If you found it helpful, 
+            consider supporting our work by delegating to our validator.
           </p>
           
-          <div style={{ 
+          {/* <div style={{ 
             background: 'var(--color-surface-elevated)',
             padding: '1rem',
             borderRadius: 'var(--border-radius-md)',
@@ -74,9 +69,9 @@ export const DeveloperSupport: React.FC = () => {
               wordBreak: 'break-all',
               border: '1px solid var(--color-border)'
             }}>
-              secretvaloper1a73czfcgtzx6y2xn6l7yj9wplrmhqp7fezv7f8
+              secretvaloper1ahawe276d250zpxt0xgpfg63ymmu63a0svuvgw
             </code>
-          </div>
+          </div> */}
 
           <div>
             <h4 style={{ 
@@ -127,8 +122,8 @@ export const DeveloperSupport: React.FC = () => {
             fontSize: '0.875rem',
             color: 'var(--color-text-secondary)'
           }}>
-            <strong>Note:</strong> Delegating helps secure the Secret Network and supports 
-            continued development of tools like this migration assistant.
+            <strong>Note:</strong> Delegating helps secure Secret Network and supports 
+            continued development of tools like this.
           </div>
         </div>
       </CardBody>
