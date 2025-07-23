@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect, useCallback } 
 import type { ReactNode } from 'react';
 import type { AppState, AppAction, RewardPool } from '../types';
 import rewardPoolsData from '../data/reward_pools.json';
+import { sortRewardPools } from '../utils/poolQueries';
 
 // Storage keys
 const THEME_STORAGE_KEY = 'secretswap-migration-theme';
@@ -22,7 +23,7 @@ const initialState: AppState = {
   permitSignature: null,
   
   // Pool data
-  rewardPools: rewardPoolsData as RewardPool[],
+  rewardPools: sortRewardPools(rewardPoolsData as RewardPool[]),
   selectedPoolAddresses: new Set(),
   poolBalances: {},
   viewingKeyStatuses: {},

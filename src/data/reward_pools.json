@@ -1358,5 +1358,40 @@
       "name": "Secret Finance Token"
     },
     "disabled": false
+  },
+  {
+    "pool_address": "secret18pqz6x67ty6wnjlrcultfcdc5trz2xy5tjglcx",
+    "code_hash": "C644EDD309DE7FD865B4FBE22054BCBE85A6C0B8ABF5F110053FE1B2D0E8A72A",
+    "deposit_token": {
+        "symbol": "ALTER",
+        "address": "secret12rcvz0umvk875kd6a803txhtlu7y0pnd73kcej",
+        "decimals": 6,
+        "name": "ALTER"
+    },
+    "reward_token": {
+        "symbol": "ALTER",
+        "address": "secret12rcvz0umvk875kd6a803txhtlu7y0pnd73kcej",
+        "decimals": 6,
+        "name": "ALTER"
+    },
+    "disabled": false
+  },
+  {
+    "pool_address": "secret1t32sqak9mr844p0vwhmt4c23nsw8t03vexk4xv",
+    "code_hash": "60976BE949D9881386554D07C6BC54F8ECA3B7F329AB2E31E9610A9CDE7476FE",
+    "name": "Infinity Pool",
+    "deposit_token": {
+        "symbol": "SEFI",
+        "address": "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+        "decimals": 6,
+        "name": "Secret Finance Token"
+    },
+    "reward_token": {
+        "symbol": "SEFI",
+        "address": "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+        "decimals": 6,
+        "name": "Secret Finance Token"
+    },
+    "disabled": false
   }
 ]

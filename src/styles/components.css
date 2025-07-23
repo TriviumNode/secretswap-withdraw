@@ -136,7 +136,9 @@
 }
 
 .checkbox-container:hover {
-  background: var(--color-surface-elevated);
+  > input {
+    background: var(--color-surface-elevated);
+  }
 }
 
 .checkbox {
@@ -279,6 +281,18 @@
 
 .pool-row.disabled {
   opacity: 0.6;
+}
+
+.pool-row-highlighted {
+  background: rgba(40, 167, 69, 0.05);
+  border-color: var(--color-success);
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.1);
+}
+
+.pool-row-highlighted:hover {
+  background: rgba(40, 167, 69, 0.08);
+  border-color: var(--color-success);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.15);
 }
 
 .pool-info {

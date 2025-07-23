@@ -1,6 +1,7 @@
 export interface RewardPool {
   pool_address: string;
   code_hash: string;
+  name?: string;
   deposit_token: {
     symbol: string;
     address: string;

@@ -5,6 +5,51 @@ import { BridgeRewardsPoolBalanceQuery, SecretSwapRewardsPoolBalanceQuery } from
 import { QueryRouterAddress, QueryRouterCodeHash } from '../constants';
 import { queryContract } from './queryWrapper';
 
+/**
+ * Sorts reward pools according to the specified criteria:
+ * 1. Secret Swap Staking pools first (reward_token.symbol !== 'sSCRT')
+ * 2. Within those groups, disabled pools last
+ * 3. Within those groups, pools with names first, then pools where deposit_token.symbol does NOT start with "LP"
+ * 4. Lastly, alphabetical by deposit_token.symbol
+ */
+export const sortRewardPools = (pools: RewardPool[]): RewardPool[] => {
+  return [...pools].sort((a, b) => {
+    // Level 1: Pool type - Secret Swap Staking first
+    const aIsSecretSwap = a.reward_token.symbol !== 'sSCRT';
+    const bIsSecretSwap = b.reward_token.symbol !== 'sSCRT';
+    
+    if (aIsSecretSwap !== bIsSecretSwap) {
+      return aIsSecretSwap ? -1 : 1; // Secret Swap first
+    }
+    
+    // Level 2: Disabled status - enabled pools first
+    if (a.disabled !== b.disabled) {
+      return a.disabled ? 1 : -1; // enabled first
+    }
+    
+    // Level 3: Pools with names first
+    const aHasName = Boolean(a.name?.trim());
+    const bHasName = Boolean(b.name?.trim());
+    
+    if (aHasName !== bHasName) {
+      return aHasName ? -1 : 1; // pools with names first
+    }
+    
+    // Level 4: Non-LP tokens first (only applies to pools without names)
+    if (!aHasName && !bHasName) {
+      const aIsLP = a.deposit_token.symbol.startsWith('LP');
+      const bIsLP = b.deposit_token.symbol.startsWith('LP');
+      
+      if (aIsLP !== bIsLP) {
+        return aIsLP ? 1 : -1; // non-LP first
+      }
+    }
+    
+    // Level 5: Alphabetical by deposit_token.symbol
+    return a.deposit_token.symbol.localeCompare(b.deposit_token.symbol);
+  });
+};
+
 export const detectViewingKeyStatuses = async (
   pools: RewardPool[],
   _walletAddress: string,
@@ -73,7 +118,6 @@ export const batchQueryPoolBalances = async (
         viewingKey = permitSignature;
       } else if (status.keySource === 'keplr') {
         const keplrKey = await getViewingKeyFromWallet(pool.pool_address);
-        console.log(pool.pool_address, keplrKey)
         if (!keplrKey) continue;
         viewingKey = keplrKey;
       } else {
@@ -97,8 +141,6 @@ export const batchQueryPoolBalances = async (
       new BridgeRewardsPoolBalanceQuery(walletAddress, poolData.viewingKey)
       : new SecretSwapRewardsPoolBalanceQuery(walletAddress, poolData.viewingKey);
 
-    console.log(query)
-    
     return {
       id: poolData.pool.pool_address, // Use pool address as ID for easy mapping
       contract: {

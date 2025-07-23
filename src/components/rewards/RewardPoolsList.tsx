@@ -137,7 +137,7 @@ export const RewardPoolsList: React.FC = () => {
           return { pool, balance };
         })
         .filter(({ pool, balance }) => 
-          pool && balance && hasValidBalance(balance.balance)
+          pool && (pool.disabled || (balance && hasValidBalance(balance.balance)))
         );
 
       if (poolsToWithdraw.length === 0) {
@@ -210,7 +210,7 @@ export const RewardPoolsList: React.FC = () => {
     return Array.from(state.selectedPoolAddresses).filter(poolAddress => {
       const pool = state.rewardPools.find(p => p.pool_address === poolAddress);
       const status = state.viewingKeyStatuses[poolAddress];
-      return pool && !status?.hasValidKey;
+      return pool && !pool.disabled && !status?.hasValidKey;
     });
   };
 
@@ -221,8 +221,16 @@ export const RewardPoolsList: React.FC = () => {
     });
   };
 
+  const getSelectedDisabledPools = () => {
+    return Array.from(state.selectedPoolAddresses).filter(poolAddress => {
+      const pool = state.rewardPools.find(p => p.pool_address === poolAddress);
+      return pool?.disabled;
+    });
+  };
+
   const poolsNeedingKeys = getSelectedPoolsNeedingKeys();
   const poolsWithValidKeys = getSelectedPoolsWithValidKeys();
+  const disabledPools = getSelectedDisabledPools();
   const canSetKeys = poolsNeedingKeys.length > 0 && state.permitSignature;
   const canWithdraw = poolsWithValidKeys.length > 0 && poolsNeedingKeys.length === 0;
 
@@ -306,7 +314,7 @@ export const RewardPoolsList: React.FC = () => {
                 loading={isWithdrawing}
                 disabled={state.isLoading || isSettingKeys}
               >
-                Withdraw from Pools ({poolsWithValidKeys.length})
+                Withdraw from Pools ({poolsWithValidKeys.length + disabledPools.length})
               </Button>
             )}
 

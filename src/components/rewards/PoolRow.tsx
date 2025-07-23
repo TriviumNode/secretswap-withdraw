@@ -45,7 +45,7 @@ export const PoolRow: React.FC<PoolRowProps> = ({
   const poolType = pool.reward_token.symbol === 'sSCRT' ? 'Bridge Staking' : 'Secret Swap Staking'
 
   return (
-    <div className={`pool-row ${disabled ? 'disabled' : ''}`}>
+    <div className={`pool-row ${disabled ? 'disabled' : ''} ${hasBalance ? 'pool-row-highlighted' : ''}`}>
       {/* Checkbox */}
       <div className="checkbox-container" style={{cursor: canSelect ? 'pointer' : 'not-allowed'}} onClick={() => canSelect && onToggleSelection(pool.pool_address)}>
         <input
@@ -60,7 +60,11 @@ export const PoolRow: React.FC<PoolRowProps> = ({
       {/* Pool Info */}
       <div className="pool-info">
         <div className="pool-symbol">
-          {poolType}: {pool.deposit_token.symbol} {pool.disabled && '(OLD)'}
+          {pool.name ? 
+            `${poolType}: ${pool.name}`
+          :
+            `${poolType}: ${pool.deposit_token.symbol}${pool.disabled ? ' (OLD)' : ''}`
+          }
         </div>
         <div className="pool-balance">
           {balance ? (
