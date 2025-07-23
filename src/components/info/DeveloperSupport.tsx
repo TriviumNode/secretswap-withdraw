@@ -28,7 +28,7 @@ export const DeveloperSupport: React.FC = () => {
       <CardBody>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <img 
-            src="/trivium_logo_black.svg" 
+            src="/trivium_logo_blue.svg" 
             alt="Trivium" 
             style={{ height: '32px' }}
             onError={(e) => {
@@ -40,9 +40,10 @@ export const DeveloperSupport: React.FC = () => {
           <p style={{ 
             margin: 0, 
             color: 'var(--color-text-secondary)',
-            lineHeight: '1.6'
+            lineHeight: '1.6',
+            textAlign: 'center'
           }}>
-            This migration tool was built by Trivium. If you found it helpful, 
+            This migration tool was built by Trivium.<br/>If you found it helpful, 
             consider supporting our work by delegating to our validator.
           </p>
           

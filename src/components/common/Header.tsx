@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
       {/* Logo */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <img 
-          src={state.theme === 'dark' ? '/secret-swap-dark.png' : '/secret-swap-light.png'} 
+          src={state.theme === 'dark' ? '/secret-swap-light.png' : '/secret-swap-dark.png'} 
           alt="Secret Swap" 
           style={{ height: '40px' }}
           onError={(e) => {

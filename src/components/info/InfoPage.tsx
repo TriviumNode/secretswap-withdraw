@@ -104,7 +104,7 @@ export const InfoPage: React.FC = () => {
                   Connect Wallet & Sign Permit
                 </h3>
                 <p style={{ margin: 0, color: 'var(--color-text-secondary)' }}>
-                  Connect your Keplr wallet and sign a permit message to enable viewing keys for supported pools.
+                  Connect your Keplr wallet and sign a permit message use as a viewing key.
                 </p>
               </div>
             </div>
@@ -154,7 +154,7 @@ export const InfoPage: React.FC = () => {
                   Withdraw from Liquidity Pools (Coming Soon)
                 </h3>
                 <p style={{ margin: 0, color: 'var(--color-text-muted)' }}>
-                  TODO: Withdraw your LP tokens and underlying assets from AMM liquidity pools.
+                  Withdraw your underlying assets from AMM liquidity pools.
                 </p>
               </div>
             </div>
