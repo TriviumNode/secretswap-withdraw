@@ -1,0 +1,415 @@
+[
+  {
+    "address": "secret1g7jfnxmxkjgqdts9wlmn238mrzxz5r92zwqv4a",
+    "decimals": 8,
+    "name": "Wrapped BTC",
+    "symbol": "WBTC",
+    "image": "/tokens/bitcoin-btc-logo.svg"
+  },
+  {
+    "address": "secret1ryh523y4e3233hphrkdslegszqz8syjfpthcpp",
+    "decimals": 18,
+    "name": "TrueUSD",
+    "symbol": "TUSD",
+    "image": "/tokens/trueusd-tusd-logo.svg"
+  },
+  {
+    "address": "secret19uje5xy80rm6rfu03df2xea532mcalw9hv8vf9",
+    "decimals": 18,
+    "name": "Sushi",
+    "symbol": "SUSHI",
+    "image": "/tokens/sushiswap-sushi-logo.svg"
+  },
+  {
+    "address": "secret1vcm525c3gd9g5ggfqg7d20xcjnmcc8shh902un",
+    "decimals": 18,
+    "name": "ReserveRights",
+    "symbol": "RSR",
+    "image": "/tokens/reserve-rights-rsr-logo.svg"
+  },
+  {
+    "address": "secret1zxt48uqzquvjsp2a7suzxlyd9n3jfpdw4k5zve",
+    "decimals": 6,
+    "name": "WSCRT",
+    "symbol": "SSCRT",
+    "image": "/scrt.svg"
+  },
+  {
+    "address": "secret1h0tn05w9cjtsz9stccq2xl5rha2fxl0n2d765t",
+    "decimals": 18,
+    "name": "AlphaToken",
+    "symbol": "ALPHA",
+    "image": "/tokens/alpha-finance-lab-alpha-logo.svg"
+  },
+  {
+    "address": "secret1el5uj9ns9sty682dem033pt50xsv5mklmsvy24",
+    "decimals": 18,
+    "name": "THORChain (ERC20)",
+    "symbol": "RUNE",
+    "image": "https://s2.coinmarketcap.com/img/coins/64x64/8272.png"
+  },
+  {
+    "address": "secret1jk0tw00vs23n8jwqdzrxtln6ww2a3k6em7s0p2",
+    "decimals": 18,
+    "name": "YF Link",
+    "symbol": "YFL",
+    "image": "https://etherscan.io/token/images/yflink_32.png"
+  },
+  {
+    "address": "secret1wuzzjsdhthpvuyeeyhfq2ftsn3mvwf9rxy6ykw",
+    "decimals": 18,
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "image": "/eth.png"
+  },
+  {
+    "address": "secret1ds8850j99cf5h3hygy25f0zzs6r6s7vsgfs8te",
+    "decimals": 18,
+    "name": "Uniswap",
+    "symbol": "UNI",
+    "image": "https://cloudflare-ipfs.com/ipfs/QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg"
+  },
+  {
+    "address": "secret1tqltnm8f53xnprmnlurczf6sr86a4mgztafxzp",
+    "decimals": 18,
+    "name": "Maker",
+    "symbol": "MKR",
+    "image": "/tokens/maker-mkr-logo.svg"
+  },
+  {
+    "address": "secret19g8edr6pa2s7ywuc3wys9sgk76kj2th7xtksey",
+    "decimals": 18,
+    "name": "Tornado Cash",
+    "symbol": "TORN",
+    "image": "/tokens/torn-torn-logo.svg"
+  },
+  {
+    "address": "secret1nq7resltu9870ar7vdu2suhzplx84800jfj2ja",
+    "decimals": 18,
+    "name": "Basic Attention Token",
+    "symbol": "BAT",
+    "image": "/tokens/basic-attention-token-bat-logo.svg"
+  },
+  {
+    "address": "secret1yxwnyk8htvvq25x2z87yj0r5tqpev452fk6h5h",
+    "decimals": 18,
+    "name": "Aave Token",
+    "symbol": "AAVE",
+    "image": "/tokens/aave-aave-logo.svg"
+  },
+  {
+    "address": "secret1s4fllut0e6vw0k3fxsg4fs6fm2ad6hn09zwgwv",
+    "decimals": 18,
+    "name": "REN",
+    "symbol": "REN",
+    "image": "/tokens/ren-ren-logo.svg"
+  },
+  {
+    "address": "secret1ukn328k6y3th5nw9z00p8lvk5s7m05cr9p06cu",
+    "decimals": 18,
+    "name": "DefiPulse Index",
+    "symbol": "DPI",
+    "image": "https://s2.coinmarketcap.com/img/coins/64x64/7055.png"
+  },
+  {
+    "address": "secret120vtzu6xjprp6pq0r8wprf3jlp86xr8uu0nlc5",
+    "decimals": 18,
+    "name": "0x",
+    "symbol": "ZRX",
+    "image": "/tokens/0x-zrx-logo.svg"
+  },
+  {
+    "address": "secret1pse3xfvv5pq5jw04wcaxhnhn7jqamfhcpm7j3t",
+    "decimals": 18,
+    "name": "Polygon",
+    "symbol": "MATIC",
+    "image": "/tokens/polygon-matic-logo.svg"
+  },
+  {
+    "address": "secret18wpjn83dayu4meu6wnn29khfkwdxs7kyrz9c8f",
+    "decimals": 6,
+    "name": "Tether",
+    "symbol": "USDT",
+    "image": "/tokens/tether-usdt-logo.svg"
+  },
+  {
+    "address": "secret1h6z05y90gwm4sqxzhz4pkyp36cna9xtp7q0urv",
+    "decimals": 6,
+    "name": "USDC",
+    "symbol": "USDC",
+    "image": "/tokens/usd-coin-usdc-logo.svg"
+  },
+  {
+    "address": "secret12sjaw9wutn39cc5wqxfmkypm4n7tcerwfpvmps",
+    "decimals": 18,
+    "name": "Ocean Token",
+    "symbol": "OCEAN",
+    "image": "/tokens/ocean-protocol-ocean-logo.svg"
+  },
+  {
+    "address": "secret1rs389ss2jch4xjmxv5guru86s8y839nmjsrm5d",
+    "decimals": 18,
+    "name": "KyberNetwork",
+    "symbol": "KNC",
+    "image": "/tokens/kyber-network-knc-logo.svg"
+  },
+  {
+    "address": "secret1szqzgpl9w42kekla57609y6dq2r39nf0ncx400",
+    "decimals": 18,
+    "name": "Compound",
+    "symbol": "COMP",
+    "image": "/tokens/compound-comp-logo.svg"
+  },
+  {
+    "address": "secret1wp8aj7tja30cek5wf5jwcv0xalw8vmdasfv2lh",
+    "decimals": 18,
+    "name": "Enjin Coin",
+    "symbol": "ENJ",
+    "image": "/tokens/enjin-coin-enj-logo.svg"
+  },
+  {
+    "address": "secret15c5ftq4rq7xq3tml4nphv2fvz3u7kg73a583qp",
+    "decimals": 18,
+    "name": "Synthetix Network",
+    "symbol": "SNX",
+    "image": "/tokens/synthetix-network-token-snx-logo.svg"
+  },
+  {
+    "address": "secret1ezg8weaamcr99848qhkqcf2ap5xz7nwe3cy22x",
+    "decimals": 18,
+    "name": "Basis Cash",
+    "symbol": "BAC",
+    "image": "https://s2.coinmarketcap.com/img/coins/64x64/7813.png"
+  },
+  {
+    "address": "secret1vq0gc5wdjqnalvtgra3dr4m07kaxkhq2st3hzx",
+    "decimals": 18,
+    "name": "WSIENNA",
+    "symbol": "SIENNA",
+    "image": "/sienna-token.svg"
+  },
+  {
+    "address": "secret1d673zrls7z5sd7nzqavqs4uzahnzqxq9zk7e62",
+    "decimals": 18,
+    "name": "UNILP-WSCRT-ETH",
+    "symbol": "UNILP-WSCRT-ETH",
+    "image": "/scrt.svg"
+  },
+  {
+    "address": "secret1vnjck36ld45apf8u4fedxd5zy7f5l92y3w5qwq",
+    "decimals": 18,
+    "name": "Dai Stablecoin",
+    "symbol": "DAI",
+    "image": "https://s2.coinmarketcap.com/img/coins/64x64/4943.png"
+  },
+  {
+    "address": "secret1p4zvqgxggrrk435nj94p6la2g4xd0rwssgzpsr",
+    "decimals": 18,
+    "name": "BandToken",
+    "symbol": "BAND",
+    "image": "/tokens/band-protocol-band-logo.svg"
+  },
+  {
+    "address": "secret13j9sg2lpmwl92taac4lr3xqhslnm2yjm4nsmzl",
+    "decimals": 8,
+    "name": "RENBTC",
+    "symbol": "RENBTC",
+    "image": "https://s2.coinmarketcap.com/img/coins/64x64/5777.png"
+  },
+  {
+    "address": "secret178t2cp33hrtlthphmt9lpd25qet349mg4kcega",
+    "decimals": 18,
+    "name": "Decentraland",
+    "symbol": "MANA",
+    "image": "/tokens/decentraland-mana-logo.svg"
+  },
+  {
+    "address": "secret1xcrf2vvxcz8dhtgzgsd0zmzlf9g320ea2rhdjw",
+    "decimals": 18,
+    "name": "ChainLink Token",
+    "symbol": "LINK",
+    "image": "/tokens/chainlink-link-logo.svg"
+  },
+  {
+    "address": "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    "decimals": 6,
+    "name": "Secret Finance Token",
+    "symbol": "SEFI",
+    "image": "/tokens/secret-finance-sefi-logo.svg"
+  },
+  {
+    "address": "secret15grq8y54tvc24j8hf8chunsdcr84fd3d30fvqv",
+    "decimals": 18,
+    "name": "yearn.finance",
+    "symbol": "YFI",
+    "image": "/tokens/yearn-finance-yfi-logo.svg"
+  },
+  {
+    "address": "secret1hz0g0yhq0sdsn4vxvfe0ueya9k0r90t6c2t6c0",
+    "decimals": 6,
+    "name": "wATOM",
+    "symbol": "WATOM",
+    "image": "/tokens/cosmos-atom-logo.svg"
+  },
+  {
+    "address": "secret1r8pgpj8x8ptqxwlweu8j8dqagjmqzugxpxa706",
+    "decimals": 18,
+    "name": "Bakery Swap",
+    "symbol": "BAKE",
+    "image": "/tokens/bakerytoken-bake-logo.svg"
+  },
+  {
+    "address": "secret16euwqyntvsp0fp2rstmggw77w5xgz2z26cpwxj",
+    "decimals": 18,
+    "name": "Binance-peg USDT",
+    "symbol": "USDT(BSC)",
+    "image": "/tokens/tether-usdt-logo.svg"
+  },
+  {
+    "address": "secret12cwvnd5g0r7raq94rpve93rdrl49f3rpw30gqn",
+    "decimals": 18,
+    "name": "Binance-peg Bitcoin Cash",
+    "symbol": "BCH(BSC)",
+    "image": "/tokens/bitcoin-cash-bch-logo.svg"
+  },
+  {
+    "address": "secret1kf45vm4mg5004pgajuplcmkrzvsyp2qtvlklyg",
+    "decimals": 18,
+    "name": "Binance-peg USDC",
+    "symbol": "USDC(BSC)",
+    "image": "/tokens/usd-coin-usdc-logo.svg"
+  },
+  {
+    "address": "secret1m6a72200733a7jnm76xrznh9cpmt4kf5ql0a6t",
+    "decimals": 18,
+    "name": "Binance-peg Ethereum",
+    "symbol": "ETH(BSC)",
+    "image": "/tokens/ethereum-eth-logo.svg"
+  },
+  {
+    "address": "secret1c7apt5mmv9ma5dpa9tmwjunhhke9de2206ufyp",
+    "decimals": 18,
+    "name": "Binance-peg SCRT",
+    "symbol": "SCRT(BSC)",
+    "image": "/scrt.svg"
+  },
+  {
+    "address": "secret15l9cqgz5uezgydrglaak5ahfac69kmx2qpd6xt",
+    "decimals": 6,
+    "name": "Secret Finance Token",
+    "symbol": "SEFI",
+    "image": "/tokens/secret-finance-sefi-logo.svg"
+  },
+  {
+    "address": "secret16nqax7x66z4efpu3y0kssdfnhg93va0h20yjre",
+    "decimals": 8,
+    "name": "Binance-peg Dogecoin",
+    "symbol": "DOGE(BSC)",
+    "image": "/tokens/dogecoin-doge-logo.svg"
+  },
+  {
+    "address": "secret1fsmwnrttkr2qtywzzlkmy6wpu22khg7a88kzm6",
+    "decimals": 18,
+    "name": "Bunny",
+    "symbol": "BUNNY",
+    "image": "/tokens/token-bunny.svg"
+  },
+  {
+    "address": "secret1trr50jqff3ncn099cpukehh8a4pjxu0d3m4ccq",
+    "decimals": 18,
+    "name": "Binance-peg ChainLink",
+    "symbol": "LINK(BSC)",
+    "image": "/tokens/chainlink-link-logo.svg"
+  },
+  {
+    "address": "secret13z4thzp3zzyxr008fsygnpn2jpl84w884gfy86",
+    "decimals": 18,
+    "name": "PancakeSwap",
+    "symbol": "CAKE",
+    "image": "/tokens/pancakeswap-cake-logo.svg"
+  },
+  {
+    "address": "secret1tact8rxxrvynk4pwukydnle4l0pdmj0sq9j9d5",
+    "decimals": 18,
+    "name": "BNB Token",
+    "symbol": "BNB(BSC)",
+    "image": "/tokens/binance-coin-bnb-logo.svg"
+  },
+  {
+    "address": "secret1npxd6pyh7ujhdsk7cvmq93y2v5uccj79sccch5",
+    "decimals": 18,
+    "name": "Venus",
+    "symbol": "XVS",
+    "image": "/tokens/venus-xvs-logo.svg"
+  },
+  {
+    "address": "secret1j0urq4pfrjr55c95z9s9jzv0evj88gjc9m0h02",
+    "decimals": 18,
+    "name": "Binance-peg XRP",
+    "symbol": "XRP(BSC)",
+    "image": "/tokens/xrp-xrp-logo.svg"
+  },
+  {
+    "address": "secret1ehz0rjrng3q8pr8sdduuajnwq7fwrdhqf8awtz",
+    "decimals": 18,
+    "name": "Binance-peg Tron Token",
+    "symbol": "TRX(BSC)",
+    "image": "/tokens/tron-trx-logo.svg"
+  },
+  {
+    "address": "secret1t9cdexpf8pxtjlz4k9cfydd0ml2jxanl0uw5s0",
+    "decimals": 6,
+    "name": "WSCRT",
+    "symbol": "OLD_SCR_T",
+    "image": "/scrt.svg"
+  },
+  {
+    "address": "secret1u9myrsw6mmgvmrrgjnkermayp88arkjd5e9jut",
+    "decimals": 18,
+    "name": "Linear",
+    "symbol": "LINA",
+    "image": "/tokens/logo-crypto-linear-buildr.svg"
+  },
+  {
+    "address": "secret1t6228qgqgkwhnsegk84ahljgw2cj7f9xprk9zd",
+    "decimals": 18,
+    "name": "Binance-peg Cardano",
+    "symbol": "ADA(BSC)",
+    "image": "/tokens/cardano-ada-logo.svg"
+  },
+  {
+    "address": "secret1px5mtmjh072znpez4fjpmxqsv3hpevdpyu9l4v",
+    "decimals": 18,
+    "name": "Binance-Peg Polkadot",
+    "symbol": "DOT(BSC)",
+    "image": "/tokens/polkadot-new-dot-logo.svg"
+  },
+  {
+    "address": "secret1793ctg56epnzjlv7t7mug2tv3s2zylhqssyjwe",
+    "decimals": 18,
+    "name": "Binance-peg BUSD",
+    "symbol": "BUSD(BSC)",
+    "image": "/tokens/binance-usd-busd-logo.svg"
+  },
+  {
+    "address": "secret17zt6ycf3n079fngha6ku5u4qwjca2k2jq6rfp9",
+    "decimals": 18,
+    "name": "Binance-peg Litecoin",
+    "symbol": "LTC(BSC)",
+    "image": "/tokens/litecoin-ltc-logo.svg"
+  },
+  {
+    "address": "secret1ztejvy40avl54gu049jdk4wtggcq2uxnw0wnxu",
+    "decimals": 18,
+    "name": "Refinable",
+    "symbol": "FINE",
+    "image": "/tokens/refinable-fine-logo.png"
+  },
+  {
+    "address": "secret17askz8qzhwgx5s2kumzpyneuccmmwv4drhhkgy",
+    "decimals": 18,
+    "name": "WSIENNA",
+    "symbol": "SIENNA",
+    "image": "/sienna-token.svg"
+  }
+]

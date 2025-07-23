@@ -1,0 +1,217 @@
+import { batchQuery } from '@shadeprotocol/shadejs';
+import type { RewardPool, PoolBalance, ViewingKeyStatus } from '../types';
+import { getViewingKeyFromWallet } from './viewingKeys';
+import { RewardsPoolBalanceQuery } from './rewardQueries';
+import { QueryRouterAddress, QueryRouterCodeHash } from '../constants';
+import { queryContract } from './queryWrapper';
+
+export const detectViewingKeyStatuses = async (
+  pools: RewardPool[],
+  _walletAddress: string,
+  _permitSignature: string | null,
+  savedViewingKeys: string[]
+): Promise<Record<string, ViewingKeyStatus>> => {
+  const statuses: Record<string, ViewingKeyStatus> = {};
+
+  for (const pool of pools) {
+    const status: ViewingKeyStatus = {
+      pool_address: pool.pool_address,
+      hasValidKey: false,
+      keySource: 'none',
+    };
+
+    // Try to get viewing key from Keplr wallet first
+    try {
+      const keplrKey = await getViewingKeyFromWallet(pool.deposit_token.address);
+      if (keplrKey) {
+        // TODO: Test the key by querying balance
+        status.hasValidKey = true;
+        status.keySource = 'keplr';
+        statuses[pool.pool_address] = status;
+        continue;
+      }
+    } catch (error) {
+      console.warn(`Failed to get Keplr viewing key for ${pool.pool_address}:`, error);
+    }
+
+    // Check if we have set a viewing key using our permit signature
+    if (savedViewingKeys.includes(pool.pool_address)) {
+      // TODO: Test the key by querying balance
+      status.hasValidKey = true;
+      status.keySource = 'signature';
+    }
+
+    statuses[pool.pool_address] = status;
+  }
+
+  return statuses;
+};
+
+export const batchQueryPoolBalances = async (
+  pools: RewardPool[],
+  viewingKeyStatuses: Record<string, ViewingKeyStatus>,
+  walletAddress: string,
+  permitSignature: string | null
+): Promise<Record<string, PoolBalance>> => {
+  const balances: Record<string, PoolBalance> = {};
+  
+  // Filter pools that have valid viewing keys and prepare queries
+  const poolsWithKeys: Array<{
+    pool: RewardPool;
+    viewingKey: string;
+    status: ViewingKeyStatus;
+  }> = [];
+
+  for (const pool of pools) {
+    const status = viewingKeyStatuses[pool.pool_address];
+    if (!status?.hasValidKey) continue;
+
+    try {
+      let viewingKey: string;
+      
+      if (status.keySource === 'signature' && permitSignature) {
+        // TODO this is wrong, but I don't think any of the pools support permits anyway 🤷‍♂️
+        viewingKey = permitSignature;
+      } else if (status.keySource === 'keplr') {
+        const keplrKey = await getViewingKeyFromWallet(pool.deposit_token.address);
+        if (!keplrKey) continue;
+        viewingKey = keplrKey;
+      } else {
+        continue;
+      }
+
+      poolsWithKeys.push({ pool, viewingKey, status });
+    } catch (error) {
+      console.error(`Failed to get viewing key for pool ${pool.pool_address}:`, error);
+    }
+  }
+
+  if (poolsWithKeys.length === 0) {
+    console.log('No pools with valid viewing keys found');
+    return balances;
+  }
+
+  // Prepare batch queries
+  const queries = poolsWithKeys.map((poolData) => {
+    const query = new RewardsPoolBalanceQuery(walletAddress, poolData.viewingKey);
+    
+    return {
+      id: poolData.pool.pool_address, // Use pool address as ID for easy mapping
+      contract: {
+        address: poolData.pool.pool_address,
+        codeHash: poolData.pool.code_hash,
+      },
+      queryMsg: query,
+    };
+  });
+
+  try {
+    console.log(`Batch querying balances for ${queries.length} pools...`);
+    
+    // Execute batch query using ShadeJS
+    const batchResponse = await batchQuery({
+      contractAddress: QueryRouterAddress,
+      codeHash: QueryRouterCodeHash,
+      lcdEndpoint: 'https://secret.api.trivium.network:1317',
+      chainId: 'secret-4',
+      queries,
+      batchSize: 10,
+    });
+
+    // Process batch response
+    for (const result of batchResponse) {
+      try {
+        const poolAddress = result.id as string;
+        const pool = pools.find(p => p.pool_address === poolAddress);
+        
+        if (!pool) {
+          console.warn(`Pool not found for address: ${poolAddress}`);
+          continue;
+        }
+
+        if (result.status === 'error') {
+          console.error(`Query failed for pool ${poolAddress}:`, result.response);
+          continue;
+        }
+
+        // Parse the balance from the response
+        let balance = '0';
+        if (result.response && typeof result.response === 'object') {
+          // Handle different possible response formats
+          if (result.response.balance) {
+            balance = result.response.balance;
+          } else if (result.response.viewing_key_error) {
+            console.warn(`Viewing key error for pool ${poolAddress}:`, result.response.viewing_key_error);
+            continue;
+          } else {
+            console.warn(`Unexpected response format for pool ${poolAddress}:`, result.response);
+          }
+        }
+
+        balances[poolAddress] = {
+          pool_address: poolAddress,
+          balance,
+          symbol: pool.deposit_token.symbol,
+          decimals: pool.deposit_token.decimals,
+        };
+        
+        console.log(`✅ Pool ${pool.deposit_token.symbol}: ${balance}`);
+      } catch (error) {
+        console.error(`Failed to process result for pool:`, error, result);
+      }
+    }
+
+    console.log(`Batch query completed. Retrieved ${Object.keys(balances).length} balances.`);
+    
+  } catch (error) {
+    console.error('Batch query failed, falling back to individual queries:', error);
+    
+    // Fallback to individual queries if batch query fails
+    for (const poolData of poolsWithKeys) {
+      try {
+        const response = await queryContract(
+          poolData.pool.pool_address,
+          new RewardsPoolBalanceQuery(walletAddress, poolData.viewingKey)
+        )
+
+        balances[poolData.pool.pool_address] = {
+          pool_address: poolData.pool.pool_address,
+          balance: response.balance.amount,
+          symbol: poolData.pool.deposit_token.symbol,
+          decimals: poolData.pool.deposit_token.decimals,
+        };
+      } catch (error) {
+        console.error(`Failed to query balance for pool ${poolData.pool.pool_address}:`, error);
+      }
+    }
+  }
+
+  return balances;
+};
+
+export const formatTokenAmount = (
+  amount: string,
+  decimals: number,
+  maxDecimals: number = 6
+): string => {
+  try {
+    const num = parseFloat(amount) / Math.pow(10, decimals);
+    if (num === 0) return '0';
+    if (num < 0.000001) return '< 0.000001';
+    
+    return num.toLocaleString('en-US', {
+      maximumFractionDigits: maxDecimals,
+      minimumFractionDigits: 0,
+    });
+  } catch {
+    return '0';
+  }
+};
+
+export const hasValidBalance = (balance: string): boolean => {
+  try {
+    return parseFloat(balance) > 0;
+  } catch {
+    return false;
+  }
+}; 
