@@ -1,6 +1,8 @@
 # Secret Swap Migration Tool
 
-A React application for migrating funds from the defunct Secret Swap protocol on Secret Network. This tool allows users to safely withdraw from reward pools and liquidity pools before the protocol shutdown.
+Warning: AI slop ahead.
+
+A React application for migrating funds from the defunct Secret Swap protocol on Secret Network. This tool allows users to safely withdraw from reward pools and liquidity pools.
 
 ![Secret Swap Migration Tool](https://via.placeholder.com/800x400/f4c430/000000?text=Secret+Swap+Migration+Tool)
 

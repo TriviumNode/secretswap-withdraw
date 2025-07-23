@@ -71,7 +71,7 @@ export const InfoPage: React.FC = () => {
           margin: '0 auto',
           lineHeight: '1.6'
         }}>
-          Withdraw your funds from Secret Swap reward pools and liquidity pools before the protocol shutdown.
+          Withdraw your funds from Secret Swap reward and liquidity pools.
         </p>
       </div>
 
