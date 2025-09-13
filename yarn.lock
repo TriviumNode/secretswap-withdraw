@@ -1164,16 +1164,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shadeprotocol/shadejs@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "@shadeprotocol/shadejs@npm:1.8.0"
+"@shadeprotocol/shadejs@npm:1.8.1":
+  version: 1.8.1
+  resolution: "@shadeprotocol/shadejs@npm:1.8.1"
   dependencies:
     bignumber.js: "npm:9.3.0"
     rxjs: "npm:^7.8.1"
-    secretjs: "npm:1.15.0"
+    secretjs: "npm:1.21.0"
     vite: "npm:^4.5.0"
     whatwg-fetch: "npm:^3.6.19"
-  checksum: 10c0/24a46a2c296af25855a0a22f7c807b7bbe31a5ef7d5c2d866a5f22a0813756cedd552cf70a89ff893741f50e769e1398d797e35f5b6411eca374ad73a5b7e6fd
+  checksum: 10c0/24c8446009ad3d6bdb03f0bc6b7525c9f4f391fe4e924b6e043d98662144836dfb8b6c9f89cc289f5e40bf2cfe079f9f59272d4be2c6bc998e679a321470cc6f
   languageName: node
   linkType: hard
 
@@ -4510,9 +4510,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secretjs@npm:1.15.0":
-  version: 1.15.0
-  resolution: "secretjs@npm:1.15.0"
+"secretjs@npm:1.21.0":
+  version: 1.21.0
+  resolution: "secretjs@npm:1.21.0"
   dependencies:
     "@cosmjs/amino": "npm:^0.32.4"
     "@cosmjs/encoding": "npm:0.32.3"
@@ -4532,33 +4532,7 @@ __metadata:
     patch-package: "npm:^8.0.0"
     protobufjs: "npm:7.2.5"
     secure-random: "npm:1.1.2"
-  checksum: 10c0/19a5cd9084052c576062d19569fc072a0916c66def46d867f7d96bff34793fd47948c9b1cb8fec4d003f5da11531055df3a3e21d5b5e8863400e90d3aaf1395a
-  languageName: node
-  linkType: hard
-
-"secretjs@npm:^1.15.1":
-  version: 1.15.1
-  resolution: "secretjs@npm:1.15.1"
-  dependencies:
-    "@cosmjs/amino": "npm:^0.32.4"
-    "@cosmjs/encoding": "npm:0.32.3"
-    "@cosmjs/math": "npm:0.32.3"
-    "@cosmjs/proto-signing": "npm:^0.32.3"
-    "@noble/hashes": "npm:1.0.0"
-    "@noble/secp256k1": "npm:1.7.0"
-    big-integer: "npm:1.6.51"
-    bignumber.js: "npm:9.0.2"
-    bip32: "npm:2.0.6"
-    bip39: "npm:3.0.4"
-    cross-fetch: "npm:3.1.5"
-    curve25519-js: "npm:0.0.4"
-    google-protobuf: "npm:^3.14.0"
-    miscreant: "npm:0.3.2"
-    pako: "npm:2.0.4"
-    patch-package: "npm:^8.0.0"
-    protobufjs: "npm:7.2.5"
-    secure-random: "npm:1.1.2"
-  checksum: 10c0/99467c1089d27be069414c6ff72633e7ba38aea3a18c268a917957ac999dab80ffe2c0691226562c3544254a8fd9069353461afe94f32c4ed1aa77ce971da82e
+  checksum: 10c0/5a7bff0020fdd7e1d77796702521bf06b1349c60fa44d0d9b8f2e2d67d88755e1e5132708ef8e6c3f168cc2d06d2f4022e4318b10e144f7f2f92a00a054dbc6e
   languageName: node
   linkType: hard
 
@@ -4568,7 +4542,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.30.1"
     "@keplr-wallet/types": "npm:^0.12.252"
-    "@shadeprotocol/shadejs": "npm:^1.8.0"
+    "@shadeprotocol/shadejs": "npm:1.8.1"
     "@types/react": "npm:^19.1.8"
     "@types/react-dom": "npm:^19.1.6"
     "@vitejs/plugin-react": "npm:^4.6.0"
@@ -4578,7 +4552,7 @@ __metadata:
     globals: "npm:^16.3.0"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    secretjs: "npm:^1.15.1"
+    secretjs: "npm:1.21.0"
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.35.1"
     vite: "npm:^7.0.4"
