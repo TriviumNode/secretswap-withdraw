@@ -4536,6 +4536,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"secretjs@npm:1.21.2":
+  version: 1.21.2
+  resolution: "secretjs@npm:1.21.2"
+  dependencies:
+    "@cosmjs/amino": "npm:^0.32.4"
+    "@cosmjs/encoding": "npm:0.32.3"
+    "@cosmjs/math": "npm:0.32.3"
+    "@cosmjs/proto-signing": "npm:^0.32.3"
+    "@noble/hashes": "npm:1.0.0"
+    "@noble/secp256k1": "npm:1.7.0"
+    big-integer: "npm:1.6.51"
+    bignumber.js: "npm:9.0.2"
+    bip32: "npm:2.0.6"
+    bip39: "npm:3.0.4"
+    cross-fetch: "npm:3.1.5"
+    curve25519-js: "npm:0.0.4"
+    google-protobuf: "npm:^3.14.0"
+    miscreant: "npm:0.3.2"
+    pako: "npm:2.0.4"
+    patch-package: "npm:^8.0.0"
+    protobufjs: "npm:7.2.5"
+    secure-random: "npm:1.1.2"
+  checksum: 10c0/a6eb06f22ab01bac670b5f5b15bc8165a228382adce1d78b221881ad70f0e03513d7e65ce7754b3d31fa49e5ef4cff1ac3fa11004e52a26ac0a6254d697bd50f
+  languageName: node
+  linkType: hard
+
 "secretswap-withdraw@workspace:.":
   version: 0.0.0-use.local
   resolution: "secretswap-withdraw@workspace:."
@@ -4552,7 +4578,7 @@ __metadata:
     globals: "npm:^16.3.0"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    secretjs: "npm:1.21.0"
+    secretjs: "npm:1.21.2"
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.35.1"
     vite: "npm:^7.0.4"
